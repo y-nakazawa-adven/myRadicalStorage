@@ -5,6 +5,14 @@
     "editor.tabSize": 2,
     "editor.insertSpaces": true
   },
+  "[typescript]": {
+    "editor.tabSize": 2,
+    "editor.insertSpaces": true
+  },
+  "[typescriptreact]": {
+    "editor.tabSize": 2,
+    "editor.insertSpaces": true
+  },
   "go.goroot": "/Users/terashimashouhei/.anyenv/envs/goenv/versions/1.17.6", // これを例にいい感じに自分のところ設定
   "go.gopath": "/Users/terashimashouhei/go/1.17.6", // これを例にいい感じに自分のところ設定
   "[go]": {
