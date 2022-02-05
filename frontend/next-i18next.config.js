@@ -15,7 +15,7 @@ module.exports = {
       http: true,
     },
     {
-      domain: 'localhost:3000',
+      domain: 'localhost:3000/ja',
       defaultLocale: 'ja',
       http: true,
     },

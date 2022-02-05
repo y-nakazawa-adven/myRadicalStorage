@@ -1,13 +1,16 @@
 {
-    "LINK": {
-        "FIND_DESTINATION": "目的地を検索",
-        "HOW_IT_WORKS": "使い方",
-        "FAQ": "よくある質問",
-        "BLOG": "ブログ",
-        "TOURS": "ツアー"
-    },
-    "ACCOUNT": {
-        "LOGIN": "ログイン",
-        "REGISTER": "登録"
-    }
+  "LINK": {
+    "FIND_DESTINATION": "目的地を検索",
+    "HOW_IT_WORKS": "使い方",
+    "FAQ": "よくある質問",
+    "BLOG": "ブログ",
+    "TOURS": "ツアー"
+  },
+  "ACCOUNT": {
+    "LOGIN": "ログイン",
+    "REGISTER": "登録"
+  },
+  "CURRENCY": {
+    "SELECT_TITLE": "その他の通貨"
+  }
 }
