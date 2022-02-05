@@ -7,9 +7,18 @@ module.exports = {
   ],
   darkMode: false, // or 'media' or 'class'
   theme: {
+    fill: (theme) => ({
+      green: theme('colors.green'),
+    }),
     extend: {
       spacing: {
         12.5: '3.125rem',
+      },
+      colors: {
+        black: '#333',
+        green: {
+          '32cccc': '#32cccc',
+        },
       },
       minWidth: {
         '580px': '580px',

@@ -1,13 +1,16 @@
 {
-    "LINK": {
-        "FIND_DESTINATION": "FIND DESTINATION",
-        "HOW_IT_WORKS": "HOW IT WORKS",
-        "FAQ": "FAQ",
-        "BLOG": "BLOG",
-        "TOURS": "TOURS"
-    },
-    "ACCOUNT": {
-        "LOGIN": "Log in",
-        "REGISTER": "Register"
-    }
+  "LINK": {
+    "FIND_DESTINATION": "FIND DESTINATION",
+    "HOW_IT_WORKS": "HOW IT WORKS",
+    "FAQ": "FAQ",
+    "BLOG": "BLOG",
+    "TOURS": "TOURS"
+  },
+  "ACCOUNT": {
+    "LOGIN": "Log in",
+    "REGISTER": "Register"
+  },
+  "CURRENCY": {
+    "SELECT_TITLE": "Other currencies"
+  }
 }
