@@ -4,27 +4,33 @@ import { useState } from 'react'
 import { ArrowDropDown, ArrowDropUp } from '@components/Icons'
 
 export type option = {
-  boldText: string // テキスト前に表示されるboldの文字
+  boldText?: string // テキスト前に表示されるboldの文字
   text: string // text
   value: string // value
+  icon?: string // icon's url
+  alt?: string
 }
 export type Props = {
   selectedValue: string // 選択中の値
-  title: string // セレクトボックス内のタイトル
+  title?: string // セレクトボックス内のタイトル
   options: option[] // option
   columns?: number // セレクトボックス内で表示される列数
   click: (value: string) => void
 }
-export const Select = ({ selectedValue, title, options, columns = 1, click }: Props) => {
+export const Select = ({ selectedValue, title = '', options, columns = 1, click }: Props) => {
   const [isOpen, setIsOpen] = useState(false)
   const gridClass = `grid grid-cols-${columns} gap-1 text-sm`
+  const selectedOption = options.find((option: option) => option.value === selectedValue)
   return (
-    <div className="relative">
+    <div className="relative" onBlur={() => setIsOpen(false)}>
       <button
-        className="flex items-center rounded-md bg-white p-2"
+        className="flex items-center justify-center rounded-md bg-white p-2"
         onClick={() => setIsOpen(!isOpen)}
       >
-        <span className="mr-1">{selectedValue}</span>
+        {selectedOption && selectedOption.icon !== '' && (
+          <img width="24" src={selectedOption.icon} alt={selectedOption.alt} className="mr-1" />
+        )}
+        <span className="mr-1">{selectedOption && selectedOption.value}</span>
         {isOpen ? (
           <ArrowDropUp className="fill-green-32cccc" />
         ) : (
@@ -33,17 +39,20 @@ export const Select = ({ selectedValue, title, options, columns = 1, click }: Pr
       </button>
       {isOpen ? (
         <div className="absolute right-0 mt-2 w-max rounded-md bg-white p-2 shadow-md">
-          {title === '' ? '' : <p className="my-4 text-sm font-bold">{title}</p>}
+          {title !== '' && <p className="my-4 text-sm font-bold">{title}</p>}
           <ul className={gridClass}>
             {options.map((option: option) => (
               <li
-                className="cursor-pointer rounded py-1 px-2 hover:bg-gray-100"
-                onClick={() => {
+                className="flex cursor-pointer items-center rounded py-1 px-2 hover:bg-gray-100"
+                onMouseDown={() => {
                   click(option.value)
                   setIsOpen(!isOpen)
                 }}
               >
-                <span className="mr-1 font-bold">{option.boldText}</span>
+                {option.icon !== '' && <img src={option.icon} alt={option.alt} className="mr-1" />}
+                {option.boldText !== '' && (
+                  <span className="mr-1 font-bold">{option.boldText}</span>
+                )}
                 {option.text}
               </li>
             ))}

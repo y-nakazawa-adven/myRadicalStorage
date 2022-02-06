@@ -1,13 +1,15 @@
-import { SetStateAction, useState } from 'react'
+import { useState } from 'react'
 import { useTranslation } from 'next-i18next'
 import Link from 'next/link'
+import { useRouter } from 'next/router'
 
 import { Props as SelectProps, Select } from '@components/Elements/Select'
 
 export const Header = () => {
+  const { push, locale } = useRouter()
   const { t } = useTranslation('header')
   const [selectedCurrency, setSelectedCurrency] = useState('¥')
-  const selectOption: SelectProps = {
+  const currencySelect: SelectProps = {
     selectedValue: selectedCurrency,
     title: t('CURRENCY.SELECT_TITLE'),
     columns: 6,
@@ -27,6 +29,31 @@ export const Header = () => {
       setSelectedCurrency(value)
     },
   }
+  const languageSelect: SelectProps = {
+    selectedValue: locale!,
+    columns: 1,
+    options: [
+      {
+        text: '日本語',
+        value: 'ja',
+        icon: '/images/Flag_of_Japan.png',
+      },
+      {
+        text: 'English',
+        value: 'en',
+        icon: '/images/Flag_of_the_United_States.png',
+      },
+      {
+        text: '简体中文',
+        value: 'zh_cn',
+        icon: '/images/Flag_of_the_Peoples_Republic_of_China.png',
+      },
+    ],
+    click: (value: string) => {
+      push('/', undefined, { locale: value })
+    },
+  }
+
   return (
     <header className="flex items-center justify-between py-2.5 px-3.5">
       <div className="h-12.5 w-60 border text-center">logo</div>
@@ -56,7 +83,10 @@ export const Header = () => {
             <Link href="/">{t('ACCOUNT.REGISTER')}</Link>
           </li>
           <li className="px-2">
-            <Select {...selectOption} />
+            <Select {...currencySelect} />
+          </li>
+          <li className="px-2">
+            <Select {...languageSelect} />
           </li>
         </ul>
       </div>
