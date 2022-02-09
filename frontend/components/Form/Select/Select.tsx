@@ -11,6 +11,7 @@ export type option = {
   icon?: string // icon's url
   alt?: string
 }
+
 export type Props = {
   selectedValue: string // 選択中の値
   title?: string // セレクトボックス内のタイトル
@@ -18,6 +19,7 @@ export type Props = {
   columns?: number // セレクトボックス内で表示される列数
   click: (value: string) => void
 }
+
 export const Select = ({ selectedValue, title = '', options, columns, click }: Props) => {
   const [isOpen, setIsOpen] = useState(false)
   const gridClass = `grid grid-cols-${columns} gap-1 text-sm`
@@ -42,7 +44,7 @@ export const Select = ({ selectedValue, title = '', options, columns, click }: P
           <ArrowDropDown className="fill-green-32cccc" />
         )}
       </button>
-      {isOpen ? (
+      {isOpen && (
         <div className="absolute right-0 mt-2 w-max rounded-md bg-white p-2 shadow-md">
           {isString(title) && <p className="my-4 text-sm font-bold">{title}</p>}
           <ul className={gridClass}>
@@ -66,8 +68,6 @@ export const Select = ({ selectedValue, title = '', options, columns, click }: P
             ))}
           </ul>
         </div>
-      ) : (
-        ''
       )}
     </div>
   )

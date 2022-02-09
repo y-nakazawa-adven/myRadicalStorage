@@ -1,0 +1,17 @@
+{
+  "AREA_INPUT": {
+    "PLACEHOLDER": "Location"
+  },
+  "CHECKIN": {
+    "PLACEHOLDER": "Checkin"
+  },
+  "CHECKOUT": {
+    "PLACEHOLDER": "Checkout"
+  },
+  "SIZE_A": {
+    "PLACEHOLDER": "Num of size A"
+  },
+  "SIZE_B": {
+    "PLACEHOLDER": "Num of size B"
+  }
+}
