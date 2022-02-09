@@ -1,7 +1,7 @@
 import { useEffect, useState } from 'react'
 import { useTranslation } from 'next-i18next'
 
-import { option, Props as SelectProps, Select } from '@components/Elements/Select'
+import { option, Props as SelectProps, Select } from '@components/Form/Select'
 import { Currency } from '@features/header/types'
 import { getCurrency } from '@features/header/api/currency'
 

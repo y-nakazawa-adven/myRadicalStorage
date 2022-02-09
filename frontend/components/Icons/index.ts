@@ -1,2 +1,7 @@
 export * from '@components/Icons/ArrowDropDown'
 export * from '@components/Icons/ArrowDropUp'
+export * from '@components/Icons/Search'
+export * from '@components/Icons/Today'
+export * from '@components/Icons/Luggage'
+export * from '@components/Icons/Minus'
+export * from '@components/Icons/Plus'

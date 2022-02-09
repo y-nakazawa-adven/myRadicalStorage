@@ -1,0 +1,17 @@
+{
+  "AREA_INPUT": {
+    "PLACEHOLDER": "エリア"
+  },
+  "CHECKIN": {
+    "PLACEHOLDER": "チェックイン"
+  },
+  "CHECKOUT": {
+    "PLACEHOLDER": "チェックアウト"
+  },
+  "SIZE_A": {
+    "PLACEHOLDER": "荷物（サイズA）の数"
+  },
+  "SIZE_B": {
+    "PLACEHOLDER": "荷物（サイズB）の数"
+  }
+}

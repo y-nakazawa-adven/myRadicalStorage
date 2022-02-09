@@ -4,12 +4,16 @@ import { serverSideTranslations } from 'next-i18next/serverSideTranslations'
 import { Page } from '@components/Page'
 import { Header } from 'features/header/components/Header'
 import { SearchBar } from 'features/searchBar/components/SearchBar'
+
 export const getStaticProps: GetStaticProps = async ({ locale }) => {
   return {
-    props: { ...(await serverSideTranslations(locale as string, ['common', 'header'])) },
+    props: {
+      ...(await serverSideTranslations(locale as string, ['common', 'header', 'searchBar'])),
+    },
     revalidate: 3600,
   }
 }
+
 const Home: NextPage = () => {
   return (
     <Page>
