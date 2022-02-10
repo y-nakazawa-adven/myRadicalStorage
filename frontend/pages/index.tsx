@@ -2,26 +2,27 @@ import type { GetStaticProps, NextPage } from 'next'
 import { serverSideTranslations } from 'next-i18next/serverSideTranslations'
 
 import { Page } from '@components/Page'
-import { Header } from 'features/header/components/Header'
-import { SearchBar } from 'features/searchBar/components/SearchBar'
+import { SearchContainer } from '@components/Layout'
+import { Map } from '@features/map'
+import { SearchList } from '@features/searchList'
 
 export const getStaticProps: GetStaticProps = async ({ locale }) => {
   return {
     props: {
-      ...(await serverSideTranslations(locale as string, ['common', 'header', 'searchBar'])),
+      ...(await serverSideTranslations(locale as string, [
+        'common',
+        'header',
+        'searchBar',
+        'searchList',
+      ])),
     },
     revalidate: 3600,
   }
 }
 
 const Home: NextPage = () => {
-  return (
-    <Page>
-      <Header />
-      <SearchBar />
-      <p>start</p>
-    </Page>
-  )
+  const head = { title: 'testですー', description: 'テストですー' }
+  return <Page {...head}>{SearchContainer(<SearchList />, <Map />)}</Page>
 }
 
 export default Home

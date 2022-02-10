@@ -2,7 +2,7 @@ import { useEffect } from 'react'
 import { connectSearchBox } from 'react-instantsearch-dom'
 import { SearchBoxProvided } from 'react-instantsearch-core'
 
-import { SuggestList } from '@features/searchBar/components/SuggestList'
+import { SuggestList } from './SuggestList'
 import useDebounce from '@lib/hooks/useDebounce'
 import { Search } from '@components/Icons'
 
@@ -33,9 +33,10 @@ export const SuggestBox = connectSearchBox(
           <input
             id={id}
             type="text"
-            className={`focus:outline-none rounded-lg border py-2.5 pl-8 pr-2 text-sm focus:ring-2 focus:ring-blue-600 ${width}`}
+            className={`focus:outline-none rounded-lg border py-2.5 pl-8 pr-2 text-xs focus:ring-2 focus:ring-blue-600 ${width}`}
             placeholder={placeholder}
             value={inputText}
+            autoComplete="off"
             onChange={(e) => {
               change(e)
             }}

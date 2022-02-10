@@ -14,10 +14,13 @@ type Props = HitsProvided<Hit<HitDoc>> & {
 }
 
 export const SuggestList = connectHits<Props, Hit<HitDoc>>(({ hits, click, width }) => {
+  const isExist = Object.keys(hits).length > 0
   return (
-    <div className={`absolute left-0 mt-1 rounded-md border bg-white ${width}`}>
-      <ul className="px-4 py-6">
-        {/* {hits!.map((hit: HitDoc) => (
+    <div>
+      {isExist && (
+        <div className={`absolute left-0 mt-1 rounded-md border bg-white ${width}`}>
+          <ul className="px-4 py-6">
+            {/* {hits!.map((hit: HitDoc) => (
         <li
           className="mb-9 flex cursor-pointer hover:font-bold"
           onClick={() => click()}
@@ -29,13 +32,19 @@ export const SuggestList = connectHits<Props, Hit<HitDoc>>(({ hits, click, width
         </li>
       ))} */}
 
-        <li className="mb-4 flex cursor-pointer hover:font-bold" onClick={() => click()} key="1">
-          <p className="font-Mulish ml-2.5 text-sm">testtest</p>
-        </li>
-        <li className="flex cursor-pointer hover:font-bold" onClick={() => click()} key="1">
-          <p className="font-Mulish ml-2.5 text-sm">testtest2</p>
-        </li>
-      </ul>
+            <li
+              className="mb-4 flex cursor-pointer hover:font-bold"
+              onClick={() => click()}
+              key="1"
+            >
+              <p className="font-Mulish ml-2.5 text-xs">testtest</p>
+            </li>
+            <li className="flex cursor-pointer hover:font-bold" onClick={() => click()} key="2">
+              <p className="font-Mulish ml-2.5 text-xs">testtest2</p>
+            </li>
+          </ul>
+        </div>
+      )}
     </div>
   )
 })
