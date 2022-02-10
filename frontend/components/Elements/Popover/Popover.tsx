@@ -27,7 +27,7 @@ export const Popover = ({ className, icon, placeholder, value, children }: Props
       />
       {isOpen && (
         <div
-          className="absolute -inset-x-1/4 mt-1 w-max rounded-md bg-white p-2 shadow-md"
+          className="absolute -inset-x-1/4 z-20 mt-1 w-max rounded-md bg-white p-2 shadow-md"
           tabIndex={0}
         >
           {children}

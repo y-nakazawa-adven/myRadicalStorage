@@ -1,8 +1,8 @@
 import { useTranslation } from 'next-i18next'
 import Link from 'next/link'
 
-import { LanguageSelect } from '@features/header/components/LanguageSelect'
-import { CurrencySelect } from '@features/header/components/CurrencySelect'
+import { LanguageSelect } from './LanguageSelect'
+import { CurrencySelect } from './CurrencySelect'
 
 export const Header = () => {
   const { t } = useTranslation('header')

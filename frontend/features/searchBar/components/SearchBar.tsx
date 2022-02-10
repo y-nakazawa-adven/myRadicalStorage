@@ -67,7 +67,7 @@ export const SearchBar = () => {
       <div>
         <label
           htmlFor="checkin"
-          className="focus-within:outline-none ml-4 flex rounded-lg border py-2.5 px-2 text-sm focus-within:ring-2 focus-within:ring-blue-600"
+          className="focus-within:outline-none ml-4 flex rounded-lg border py-2 px-2 text-xs focus-within:ring-2 focus-within:ring-blue-600"
           tabIndex={0}
         >
           <Today className="z-10 fill-green-32cccc" width="20" height="20" />
@@ -93,7 +93,7 @@ export const SearchBar = () => {
       <div>
         <label
           htmlFor="checkout"
-          className="focus-within:outline-none ml-2 flex rounded-lg border py-2.5 px-2 text-sm focus-within:ring-2 focus-within:ring-blue-600"
+          className="focus-within:outline-none ml-2 flex items-center rounded-lg border py-2 px-2 text-xs focus-within:ring-2 focus-within:ring-blue-600"
           tabIndex={0}
         >
           <Today className="z-10 fill-green-32cccc" width="20" height="20" />
@@ -112,29 +112,29 @@ export const SearchBar = () => {
             showTimeSelect
             timeIntervals={timeIntervals}
             placeholderText={t('CHECKOUT.PLACEHOLDER')}
-            className="focus:outline-none pl-2"
+            className="focus:outline-none h-full pl-2"
           />
         </label>
       </div>
-      <div className="ml-4">
+      <div className="ml-4 text-xs">
         <Popover
           placeholder={t('SIZE_A.PLACEHOLDER')}
           value={countSizeA > 0 ? `サイズA × ${countSizeA}` : ''}
           icon={<Luggage className="z-10 fill-green-32cccc" width="20" height="20" />}
-          className="w-52"
+          className="w-40"
         >
           <div className="w-80 p-5">
             <div className="flex items-center">
-              <p className="mr-4">サイズA</p>
-              <button className="px-2" onClick={() => clickSizeA(-1)}>
+              <p className="mr-2 font-bold">サイズA</p>
+              <button className="px-1" onClick={() => clickSizeA(-1)}>
                 <Minus className="fill-green-32cccc" width="20" height="20" />
               </button>
-              <span className="w-6 text-center">{countSizeA}</span>
-              <button className="px-2" onClick={() => clickSizeA(1)}>
+              <span className="w-4 text-center">{countSizeA}</span>
+              <button className="px-1" onClick={() => clickSizeA(1)}>
                 <Plus className="fill-green-32cccc" width="20" height="20" />
               </button>
             </div>
-            <p className="mt-4 text-xs">
+            <p className="mt-3 text-gray-999">
               最大辺が45cm未満の大きさのお荷物 (リュック、ハンドバッグ、お手荷物など)
             </p>
           </div>
@@ -145,20 +145,20 @@ export const SearchBar = () => {
           placeholder={t('SIZE_B.PLACEHOLDER')}
           value={countSizeB > 0 ? `サイズB × ${countSizeB}` : ''}
           icon={<Luggage className="z-10 fill-green-32cccc" width="20" height="20" />}
-          className="w-52"
+          className="w-40 text-xs"
         >
-          <div className="w-80 p-5">
+          <div className="w-80 p-5 text-xs">
             <div className="flex items-center">
-              <p className="mr-4">サイズB</p>
-              <button className="px-2" onClick={() => clickSizeB(-1)}>
+              <p className="mr-2 font-bold">サイズB</p>
+              <button className="px-1" onClick={() => clickSizeB(-1)}>
                 <Minus className="fill-green-32cccc" width="20" height="20" />
               </button>
-              <span className="w-6 text-center">{countSizeB}</span>
-              <button className="px-2" onClick={() => clickSizeB(1)}>
+              <span className="w-4 text-center">{countSizeB}</span>
+              <button className="px-1" onClick={() => clickSizeB(1)}>
                 <Plus className="fill-green-32cccc" width="20" height="20" />
               </button>
             </div>
-            <p className="mt-4 text-xs">
+            <p className="mt-3 text-gray-999">
               最大辺が45cm未満の大きさのお荷物 (リュック、ハンドバッグ、お手荷物など)
             </p>
           </div>

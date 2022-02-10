@@ -45,7 +45,7 @@ export const Select = ({ selectedValue, title = '', options, columns, click }: P
         )}
       </button>
       {isOpen && (
-        <div className="absolute right-0 mt-2 w-max rounded-md bg-white p-2 shadow-md">
+        <div className="absolute right-0 z-20 mt-2 w-max rounded-md bg-white p-2 shadow-md">
           {isString(title) && <p className="my-4 text-sm font-bold">{title}</p>}
           <ul className={gridClass}>
             {options.map((option: option) => (

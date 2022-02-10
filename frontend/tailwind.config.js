@@ -12,7 +12,7 @@ module.exports = {
     }),
     extend: {
       spacing: {
-        2.25: '0.5625rem',
+        1.75: '0.4375rem',
         12.5: '3.125rem',
         42: '10.5rem',
       },
@@ -25,6 +25,9 @@ module.exports = {
         green: {
           '32cccc': '#32cccc',
         },
+      },
+      height: {
+        searchContainer: 'calc(100vh - 133px)',
       },
       minWidth: {
         '580px': '580px',
