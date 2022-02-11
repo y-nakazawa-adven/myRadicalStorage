@@ -1,5 +1,6 @@
 import { useState } from 'react'
-import { PopoverButton } from './PopoverButton'
+import cn from 'classnames'
+import { Button } from '@components/Elements'
 
 type Props = {
   className?: string
@@ -18,8 +19,11 @@ export const Popover = ({ className, icon, placeholder, value, children }: Props
         if (!e.currentTarget.contains(e.relatedTarget)) setIsOpen(false)
       }}
     >
-      <PopoverButton
-        className={className}
+      <Button
+        className={cn(
+          className,
+          'focus:outline-none w-max rounded-lg border py-2.5 pr-3 focus:ring-2 focus:ring-blue-600',
+        )}
         icon={icon}
         placeholder={placeholder}
         value={value}

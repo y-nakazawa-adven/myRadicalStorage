@@ -5,7 +5,7 @@ import { addMinutes, addMonths, endOfDay, getDayOfYear, startOfDay } from 'date-
 import { Configure, InstantSearch } from 'react-instantsearch-dom'
 
 import { Luggage, Minus, Plus, Search, Today } from '@components/Icons'
-import { Popover } from '@components/Elements/Popover'
+import { Popover } from '@components/Elements'
 import { suggestClient, suggestIndexName } from '@lib/api/algolia'
 import { SuggestBox } from './SuggestBox'
 

@@ -1,4 +1,4 @@
-import { Button } from '@components/Elements/Button'
+import { Button } from '@components/Elements'
 import { useTranslation } from 'next-i18next'
 
 export const SearchList = () => {

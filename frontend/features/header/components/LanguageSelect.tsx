@@ -3,7 +3,7 @@ import { useEffect, useState } from 'react'
 
 import { getLanguages } from '@features/header/api/language'
 import { Language } from '@features/header/types'
-import { option, Props as SelectProps, Select } from '@components/Form/Select'
+import { option, Props as SelectProps, Select } from '@components/Form'
 
 export const LanguageSelect = () => {
   const { push, locale } = useRouter()
