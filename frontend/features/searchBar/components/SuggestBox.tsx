@@ -5,9 +5,10 @@ import { SearchBoxProvided } from 'react-instantsearch-core'
 import { SuggestList } from './SuggestList'
 import useDebounce from '@lib/hooks/useDebounce'
 import { Search } from '@components/Icons'
+import { InputField } from '@components/Form'
 
 interface Props extends SearchBoxProvided {
-  id?: string
+  id: string
   placeholder?: string
   inputText: string
   width: string
@@ -26,22 +27,14 @@ export const SuggestBox = connectSearchBox(
 
     return (
       <div className="relative">
-        <label htmlFor={id} className="relative" tabIndex={0}>
-          <div className="absolute inset-y-0 left-0 pl-2">
-            <Search className="fill-green-32cccc" width="20" height="20" />
-          </div>
-          <input
-            id={id}
-            type="text"
-            className={`focus:outline-none rounded-lg border py-2.5 pl-8 pr-2 text-xs focus:ring-2 focus:ring-blue-600 ${width}`}
-            placeholder={placeholder}
-            value={inputText}
-            autoComplete="off"
-            onChange={(e) => {
-              change(e)
-            }}
-          />
-        </label>
+        <InputField
+          id={id}
+          icon={<Search className="fill-green-32cccc" width="20" height="20" />}
+          placeholder={placeholder}
+          value={inputText}
+          width={width}
+          change={change}
+        />
         <SuggestList click={clickSuggest} width={width} />
       </div>
     )
