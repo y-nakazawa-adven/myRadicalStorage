@@ -15,9 +15,10 @@ export const SearchBar = () => {
   const [countSizeA, setCountSizeA] = useState(0)
   const [countSizeB, setCountSizeB] = useState(0)
   const clickSizeA = (num: number) => {
-    countSizeA + num >= 0 ? setCountSizeA(countSizeA + num) : 0
+    countSizeA + num >= 0 ? setCountSizeA((prevCountSizeA) => prevCountSizeA + num) : 0
   }
-  const clickSizeB = (num: number) => (countSizeB + num >= 0 ? setCountSizeB(countSizeB + num) : 0)
+  const clickSizeB = (num: number) =>
+    countSizeB + num >= 0 ? setCountSizeB((prevCountSizeB) => prevCountSizeB + num) : 0
 
   const [checkinDate, setCheckinDate] = useState<Date>()
   const [checkoutDate, setCheckoutDate] = useState<Date>()
