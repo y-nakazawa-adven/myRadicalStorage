@@ -33,11 +33,12 @@ export const Map = () => {
   }
 
   return (
-    <LoadScript googleMapsApiKey={MAP_API_KEY}>
-      <GoogleMap mapContainerClassName="w-full h-full" center={center} zoom={15}>
-        <Marker position={positionAkiba} label={markerLabelAkiba} />
-        <Marker position={positionIwamotocho} label={markerLabelIwamotocho} />
-      </GoogleMap>
-    </LoadScript>
+    // <LoadScript googleMapsApiKey={MAP_API_KEY}>
+    //   <GoogleMap mapContainerClassName="w-full h-full" center={center} zoom={15}>
+    //     <Marker position={positionAkiba} label={markerLabelAkiba} />
+    //     <Marker position={positionIwamotocho} label={markerLabelIwamotocho} />
+    //   </GoogleMap>
+    // </LoadScript>
+    <div></div>
   )
 }

@@ -14,6 +14,7 @@ export const getStaticProps: GetStaticProps = async ({ locale }) => {
         'header',
         'searchBar',
         'searchList',
+        'searchFiltering',
       ])),
     },
     revalidate: 3600,
