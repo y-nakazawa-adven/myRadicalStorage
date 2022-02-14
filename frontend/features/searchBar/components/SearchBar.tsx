@@ -122,7 +122,7 @@ export const SearchBar = () => {
           placeholder={t('SIZE_A.PLACEHOLDER')}
           value={countSizeA > 0 ? `サイズA × ${countSizeA}` : ''}
           icon={<Luggage className="z-10 fill-green-32cccc" width="20" height="20" />}
-          className="w-40"
+          className="w-40 text-left"
         >
           <div className="w-80 p-5">
             <div className="flex items-center">
@@ -141,14 +141,14 @@ export const SearchBar = () => {
           </div>
         </Popover>
       </div>
-      <div className="ml-4">
+      <div className="ml-4 text-xs">
         <Popover
           placeholder={t('SIZE_B.PLACEHOLDER')}
           value={countSizeB > 0 ? `サイズB × ${countSizeB}` : ''}
           icon={<Luggage className="z-10 fill-green-32cccc" width="20" height="20" />}
-          className="w-40 text-xs"
+          className="w-40 text-left"
         >
-          <div className="w-80 p-5 text-xs">
+          <div className="w-80 p-5">
             <div className="flex items-center">
               <p className="mr-2 font-bold">サイズB</p>
               <button className="px-1" onClick={() => clickSizeB(-1)}>

@@ -1,5 +1,5 @@
-import { Cycle } from '@components/Icons/Cycle'
-import { Star } from '@components/Icons/Star'
+import { Cycle } from '@components/Icons'
+import { Star } from '@components/Icons'
 
 export const SearchListItem = () => {
   return (
