@@ -10,7 +10,7 @@ type Props = {
 
 export const Button = ({ className, icon, placeholder = '', value, click }: Props) => {
   return (
-    <button className={cn({ 'pl-8': icon }, className)} onClick={click}>
+    <button className={cn({ 'relative pl-8': icon }, className)} onClick={click}>
       {icon && <div className="absolute inset-y-1.75 left-2">{icon}</div>}
       {value ? (
         <p className="text-black">{value}</p>

@@ -5,7 +5,7 @@ import { addMinutes, addMonths, endOfDay, getDayOfYear, startOfDay } from 'date-
 import { Configure, InstantSearch } from 'react-instantsearch-dom'
 
 import { Luggage, Minus, Plus, Search, Today } from '@components/Icons'
-import { Popover } from '@components/Elements'
+import { Button, Popover } from '@components/Elements'
 import { suggestClient, suggestIndexName } from '@lib/api/algolia'
 import { SuggestBox } from './SuggestBox'
 
@@ -51,8 +51,11 @@ export const SearchBar = () => {
     onChange: (date: Date) => setCheckoutDate(date),
   }
 
+  // search button click!
+  const clickSearchButton = () => {}
+
   return (
-    <div className="flex items-center px-4 py-2.5">
+    <div className="flex flex-wrap items-center gap-4 overflow-hidden px-4 py-2.5">
       <InstantSearch indexName={suggestIndexName} searchClient={suggestClient}>
         <Configure hitsPerPage={4} />
         <SuggestBox
@@ -68,7 +71,7 @@ export const SearchBar = () => {
       <div>
         <label
           htmlFor="checkin"
-          className="focus-within:outline-none ml-4 flex rounded-lg border py-2 px-2 text-xs focus-within:ring-2 focus-within:ring-blue-600"
+          className="focus-within:outline-none flex rounded-lg border py-2 px-2 text-xs focus-within:ring-2 focus-within:ring-blue-600"
           tabIndex={0}
         >
           <Today className="z-10 fill-green-32cccc" width="20" height="20" />
@@ -94,7 +97,7 @@ export const SearchBar = () => {
       <div>
         <label
           htmlFor="checkout"
-          className="focus-within:outline-none ml-2 flex items-center rounded-lg border py-2 px-2 text-xs focus-within:ring-2 focus-within:ring-blue-600"
+          className="focus-within:outline-none flex items-center rounded-lg border py-2 px-2 text-xs focus-within:ring-2 focus-within:ring-blue-600"
           tabIndex={0}
         >
           <Today className="z-10 fill-green-32cccc" width="20" height="20" />
@@ -117,7 +120,7 @@ export const SearchBar = () => {
           />
         </label>
       </div>
-      <div className="ml-4 text-xs">
+      <div className="text-xs">
         <Popover
           placeholder={t('SIZE_A.PLACEHOLDER')}
           value={countSizeA > 0 ? `サイズA × ${countSizeA}` : ''}
@@ -141,7 +144,7 @@ export const SearchBar = () => {
           </div>
         </Popover>
       </div>
-      <div className="ml-4 text-xs">
+      <div className="text-xs">
         <Popover
           placeholder={t('SIZE_B.PLACEHOLDER')}
           value={countSizeB > 0 ? `サイズB × ${countSizeB}` : ''}
@@ -165,6 +168,12 @@ export const SearchBar = () => {
           </div>
         </Popover>
       </div>
+      <Button
+        className="focus:outline-none w-max rounded-lg border py-2.5 px-3 text-xs text-green-32cccc focus:ring-2 focus:ring-blue-600"
+        icon={<Search className="fill-green-32cccc" width="20" height="20" />}
+        value="検索"
+        click={clickSearchButton}
+      />
     </div>
   )
 }

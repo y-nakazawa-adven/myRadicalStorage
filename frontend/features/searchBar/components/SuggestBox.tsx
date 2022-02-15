@@ -1,6 +1,7 @@
 import { useEffect } from 'react'
 import { connectSearchBox } from 'react-instantsearch-dom'
 import { SearchBoxProvided } from 'react-instantsearch-core'
+import cn from 'classnames'
 
 import { SuggestList } from './SuggestList'
 import useDebounce from '@lib/hooks/useDebounce'
@@ -12,11 +13,12 @@ interface Props extends SearchBoxProvided {
   placeholder?: string
   inputText: string
   width: string
+  className?: string
   change: (event: { target: HTMLInputElement }) => void
 }
 
 export const SuggestBox = connectSearchBox(
-  ({ id, placeholder, inputText, width, change, refine }: Props) => {
+  ({ id, placeholder, inputText, width, className, change, refine }: Props) => {
     const debouncedInputText = useDebounce<string>(inputText, 1000)
     const clickSuggest = () => {
       console.log('click suggest item!')
@@ -26,7 +28,7 @@ export const SuggestBox = connectSearchBox(
     }, [debouncedInputText])
 
     return (
-      <div className="relative">
+      <div className={cn('relative', className)}>
         <InputField
           id={id}
           icon={<Search className="fill-green-32cccc" width="20" height="20" />}
