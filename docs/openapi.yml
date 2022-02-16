@@ -1,0 +1,5 @@
+openapi: 3.0.0
+info:
+  title: myRadicalStorage
+  description: API定義です！
+  version: 1.0.0
