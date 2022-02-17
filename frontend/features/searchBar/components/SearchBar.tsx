@@ -55,7 +55,7 @@ export const SearchBar = () => {
   const clickSearchButton = () => {}
 
   return (
-    <div className="flex flex-wrap items-center gap-4 overflow-hidden px-4 py-2.5">
+    <div className="flex flex-wrap items-center gap-4 px-4 py-2.5">
       <InstantSearch indexName={suggestIndexName} searchClient={suggestClient}>
         <Configure hitsPerPage={4} />
         <SuggestBox
