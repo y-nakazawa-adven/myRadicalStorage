@@ -46,7 +46,7 @@ export const Header = () => {
         </div>
       </div>
 
-      <div className="border-gray- dde1e6 h-px w-full border-b" />
+      <div className="h-px w-full border-b border-gray-dde1e6" />
     </header>
   )
 }
