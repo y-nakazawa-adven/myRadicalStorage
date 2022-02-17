@@ -1,4 +1,4 @@
-import { ChangeEventHandler } from 'react'
+import { ChangeEventHandler, FocusEventHandler } from 'react'
 
 type InputFieldProps = {
   type?: 'text' | 'email' | 'password'
@@ -7,7 +7,8 @@ type InputFieldProps = {
   placeholder?: string
   value: string
   width?: string
-  change: ChangeEventHandler<HTMLInputElement>
+  change?: ChangeEventHandler<HTMLInputElement>
+  blur?: FocusEventHandler<HTMLInputElement>
 }
 
 export const InputField = ({
@@ -18,6 +19,7 @@ export const InputField = ({
   value,
   width,
   change,
+  blur,
 }: InputFieldProps) => (
   <label htmlFor={id} className="relative" tabIndex={0}>
     <div className="absolute inset-y-0 left-0 pl-2">{icon}</div>
@@ -29,6 +31,7 @@ export const InputField = ({
       value={value}
       autoComplete="off"
       onChange={change}
+      onBlur={blur}
     />
   </label>
 )

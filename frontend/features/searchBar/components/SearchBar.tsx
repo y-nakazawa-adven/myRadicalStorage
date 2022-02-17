@@ -3,15 +3,18 @@ import { useState } from 'react'
 import { useTranslation } from 'next-i18next'
 import { addMinutes, addMonths, endOfDay, getDayOfYear, startOfDay } from 'date-fns'
 import { Configure, InstantSearch } from 'react-instantsearch-dom'
+import { useRouter } from 'next/router'
 
 import { Luggage, Minus, Plus, Search, Today } from '@components/Icons'
 import { Button, Popover } from '@components/Elements'
-import { suggestClient, suggestIndexName } from '@lib/api/algolia'
+import { suggestClient, suggestIndexNameJA, suggestIndexNameEN } from '@lib/api/algolia'
 import { SuggestBox } from './SuggestBox'
+import { SearchQuery } from '@features/searchBar'
 
 export const SearchBar = () => {
+  const { locale } = useRouter()
   const { t } = useTranslation('searchBar')
-  const [locationInput, setLocationInput] = useState('test')
+  const [locationInput, setLocationInput] = useState('')
   const [countSizeA, setCountSizeA] = useState(0)
   const [countSizeB, setCountSizeB] = useState(0)
   const clickSizeA = (num: number) => {
@@ -20,20 +23,21 @@ export const SearchBar = () => {
   const clickSizeB = (num: number) =>
     countSizeB + num >= 0 ? setCountSizeB((prevCountSizeB) => prevCountSizeB + num) : 0
 
-  const [checkinDate, setCheckinDate] = useState<Date>()
-  const [checkoutDate, setCheckoutDate] = useState<Date>()
+  const [checkinDate, setCheckinDate] = useState(new Date())
+  const [checkoutDate, setCheckoutDate] = useState(new Date())
 
   const timeIntervals = 30 // 時間選択の間隔。30分単位
   const dateFormat = 'yyyy/MM/dd HH:mm' // 選択後にフォームに表示される日付のフォーマット。ex. 2022/01/01 00:00
   const timeFormat = 'HH:mm' // datepicker内の時間のフォーマット ex. 11:00
-
+  // const aaa = new Date()
+  // console.log(aaa.getTimezoneOffset() / 60)
   // チェックインのdatePickerの設定諸々
   const checkinConfig = {
     minDate: new Date(),
     maxDate: checkoutDate || addMonths(new Date(), 3), // 最大3ヶ月
     minTime: startOfDay(new Date()),
     maxTime:
-      checkoutDate && checkinDate && getDayOfYear(checkoutDate) === getDayOfYear(checkinDate)
+      getDayOfYear(checkoutDate) === getDayOfYear(checkinDate)
         ? addMinutes(checkoutDate, -30)
         : endOfDay(new Date()),
     onChange: (date: Date) => setCheckinDate(date),
@@ -44,11 +48,24 @@ export const SearchBar = () => {
     minDate: checkinDate || new Date(),
     maxDate: addMonths(new Date(), 3), // 最大3ヶ月
     minTime:
-      checkoutDate && checkinDate && getDayOfYear(checkoutDate) === getDayOfYear(checkinDate) // 最大３ヶ月想定なので、重複がない点を考慮しgetDayOfYear使ってます
+      getDayOfYear(checkoutDate) === getDayOfYear(checkinDate) // 最大３ヶ月想定なので、重複がない点を考慮しgetDayOfYear使ってます
         ? addMinutes(checkinDate, 30)
         : startOfDay(new Date()),
     maxTime: endOfDay(new Date()),
     onChange: (date: Date) => setCheckoutDate(date),
+  }
+
+  //  TODO: いったんここに！あとできれいに直します
+  const suggestIndexName = (locale: string | undefined) => {
+    if (locale === 'en') {
+      return suggestIndexNameEN
+    }
+    return suggestIndexNameJA
+  }
+
+  const clickSuggest = (hit: SearchQuery) => {
+    console.log('click suggest item!')
+    setLocationInput(`${hit.location} - ${hit.address}`)
   }
 
   // search button click!
@@ -56,13 +73,14 @@ export const SearchBar = () => {
 
   return (
     <div className="flex flex-wrap items-center gap-4 px-4 py-2.5">
-      <InstantSearch indexName={suggestIndexName} searchClient={suggestClient}>
+      <InstantSearch indexName={suggestIndexName(locale)} searchClient={suggestClient}>
         <Configure hitsPerPage={4} />
         <SuggestBox
           id="location-input"
           inputText={locationInput}
           placeholder={t('AREA_INPUT.PLACEHOLDER')}
-          width="w-56"
+          width="w-72"
+          click={clickSuggest}
           change={(e) => {
             setLocationInput(e.target.value)
           }}
