@@ -1,18 +1,22 @@
+/**
+ * https://react-google-maps-api-docs.netlify.app/
+ */
+
 import { MAP_API_KEY } from '@lib/utils/const'
 import { GoogleMap, LoadScript, Marker } from '@react-google-maps/api'
-import { Location } from '@features/map/types'
+import { Geo } from '@lib/utils/types'
 
 export const Map = () => {
-  const center: Location = {
+  const center: Geo = {
     lat: 35.69575,
     lng: 139.77521,
   }
-  const positionAkiba: Location = {
+  const positionAkiba: Geo = {
     lat: 35.69731,
     lng: 139.7747,
   }
 
-  const positionIwamotocho: Location = {
+  const positionIwamotocho: Geo = {
     lat: 35.69397,
     lng: 139.7762,
   }

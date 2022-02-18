@@ -8,7 +8,7 @@ export const SearchList = () => {
   return (
     <div className="h-full min-w-84 overflow-hidden py-4">
       <div className="mb-2 flex items-center justify-between pr-4">
-        <p className="text-2xl">{t('TITLE')}</p>
+        <h1 className="text-2xl">{t('TITLE')}</h1>
         <Modal
           text={t('FILTER_TEXT')}
           className="focus:outline-none w-max rounded-lg border py-2 pl-2.5 pr-3 focus:ring-2 focus:ring-blue-600"

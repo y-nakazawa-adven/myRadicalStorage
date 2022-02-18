@@ -3,8 +3,7 @@ import { serverSideTranslations } from 'next-i18next/serverSideTranslations'
 
 import { Page } from '@components/Page'
 import { SearchContainer } from '@components/Layout'
-import { Map } from '@features/map'
-import { SearchList } from '@features/searchList'
+import { SearchList, Map } from '@features/searchList'
 
 export const getStaticProps: GetStaticProps = async ({ locale }) => {
   return {
