@@ -7,5 +7,5 @@ export type PropertyForSearch = {
   imageUrl: string
 }
 
-export type PropertyCategory = '' | ''
+export type PropertyCategory = 'CITY' | 'STATION'
 export type PropertyTag = '' | ''
