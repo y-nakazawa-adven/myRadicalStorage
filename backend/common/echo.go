@@ -1,6 +1,8 @@
 package common
 
 import (
+	"net/http"
+
 	baseInfo "github.com/adShoheiTerashima/myRadicalStorage/baseInfo/handlers"
 	"github.com/go-playground/validator/v10"
 	"github.com/labstack/echo/v4"
@@ -32,5 +34,8 @@ func InitEcho() {
 	}))
 
 	// routing
+	EchoServer.GET("/health-check", func(c echo.Context) error {
+		return c.String(http.StatusOK, "ok")
+	})
 	baseInfo.NewBaseInfoHandler(EchoServer)
 }
