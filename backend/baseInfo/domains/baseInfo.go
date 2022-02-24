@@ -5,9 +5,9 @@ import (
 )
 
 type BaseInfo struct {
-	id       uint
-	name     string
-	langCode string
+	ID       int    `json:"id"`
+	Name     string `json:"name"`
+	LangCode string `json:"langCode" query:"langCode"`
 }
 
 func New() *BaseInfo {
@@ -15,32 +15,33 @@ func New() *BaseInfo {
 }
 
 func (b *BaseInfo) SetAll(data BaseInfo) {
-	b.SetID(data.id)
-	b.SetName(data.name)
-	b.SetLangCode(data.langCode)
+	b.SetID(data.ID)
+	b.SetName(data.Name)
+	b.SetLangCode(data.LangCode)
 }
 func (b *BaseInfo) GetAll() *BaseInfo {
 	return b
 }
-func (b *BaseInfo) SetID(id uint) {
-	b.id = id
+func (b *BaseInfo) SetID(id int) {
+	b.ID = id
 }
-func (b *BaseInfo) GetID() uint {
-	return b.id
+func (b *BaseInfo) GetID() int {
+	return b.ID
 }
 func (b *BaseInfo) SetName(name string) {
-	b.name = name
+	b.Name = name
 }
 func (b *BaseInfo) GetName() string {
-	return b.name
+	return b.Name
 }
 func (b *BaseInfo) SetLangCode(langCode string) {
-	l := lang.Init()
+	l := lang.New()
 	if l.ValidCode(langCode) {
-		b.langCode = langCode
+		b.LangCode = langCode
+		return
 	}
-	b.langCode = ""
+	b.LangCode = ""
 }
 func (b *BaseInfo) GetLangCode() string {
-	return b.langCode
+	return b.LangCode
 }

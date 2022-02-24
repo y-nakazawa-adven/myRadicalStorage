@@ -6,6 +6,7 @@ import (
 	"github.com/adShoheiTerashima/myRadicalStorage/baseInfo/domains"
 	"github.com/adShoheiTerashima/myRadicalStorage/baseInfo/usecases"
 	"github.com/adShoheiTerashima/myRadicalStorage/common/infra"
+	langDomain "github.com/adShoheiTerashima/myRadicalStorage/languages/domains"
 
 	"github.com/labstack/echo/v4"
 )
@@ -20,13 +21,18 @@ func NewBaseInfoHandler(e *echo.Echo) {
 }
 
 func (b *BaseInfoHandler) FetchListByLang(c echo.Context) error {
-	// TODO: bind and validation
+
+	langCode := c.QueryParam("langCode")
+	lang := langDomain.New()
+	if !lang.ValidCode(langCode) {
+		langCode = "ja"
+	}
 
 	client := infra.OpenFirestore(c)
 	defer infra.CloseFirestore(client)
 	b.baseInfoUsecases = usecases.NewBaseInfoUsecase(c, client)
 
-	list, err := b.baseInfoUsecases.FetchListByLang("dummy")
+	list, err := b.baseInfoUsecases.FetchListByLang(langCode)
 	if err != nil {
 		c.Echo().Logger.Error(err)
 		return echo.ErrInternalServerError

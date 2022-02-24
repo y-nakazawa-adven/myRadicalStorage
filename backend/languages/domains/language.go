@@ -13,7 +13,7 @@ type Language struct {
 	NativeName string
 }
 
-func Init() *Language {
+func New() *Language {
 	return &Language{}
 }
 
@@ -66,8 +66,8 @@ func (l *Language) CodeForNativeName(name string) string {
 }
 
 func (l *Language) ValidCode(code string) bool {
-	_, ok := Languages[code]
-	return ok
+	r := Languages[code]
+	return r.Code == code
 }
 
 func (l *Language) ValidName(name string) bool {

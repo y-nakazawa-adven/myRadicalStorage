@@ -5,5 +5,5 @@ type IBaseInfoUsecase interface {
 }
 
 type IBaseInfoRepository interface {
-	FetchListByLang(result []*BaseInfo, langCode string) error
+	FetchListByLang(langCode string) ([]*BaseInfo, error)
 }
