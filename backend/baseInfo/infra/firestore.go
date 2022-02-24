@@ -16,24 +16,25 @@ type baseInfoRepository struct {
 func NewBaseInfoRepository(ctx echo.Context, firestoreDB *firestore.Client) baseInfo.IBaseInfoRepository {
 	return &baseInfoRepository{
 		ctx:        ctx.Request().Context(),
-		collection: firestoreDB.Collection("baseInfo"),
+		collection: firestoreDB.Collection("baseInfoList"),
 	}
 }
 
-func (b *baseInfoRepository) FetchListByLang(result []*baseInfo.BaseInfo, langCode string) error {
-
-	dss, err := b.collection.Where("langCode", "=", langCode).Documents(b.ctx).GetAll()
+func (b *baseInfoRepository) FetchListByLang(langCode string) ([]*baseInfo.BaseInfo, error) {
+	result := []*baseInfo.BaseInfo{}
+	dss, err := b.collection.Where("langCode", "==", langCode).Documents(b.ctx).GetAll()
 	if err != nil {
-		return err
+		return result, err
 	}
 	for _, ss := range dss {
 		record := &baseInfo.BaseInfo{}
-		t := baseInfo.New()
+
 		if err2 := ss.DataTo(record); err2 != nil {
-			return err2
+			return result, err2
 		}
+		t := baseInfo.New()
 		t.SetAll(*record)
 		result = append(result, t.GetAll())
 	}
-	return nil
+	return result, nil
 }

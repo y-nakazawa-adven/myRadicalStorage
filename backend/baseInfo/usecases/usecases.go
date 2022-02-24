@@ -18,7 +18,5 @@ func NewBaseInfoUsecase(ctx echo.Context, firestoreDB *firestore.Client) baseInf
 }
 
 func (b *baseInfoUsecase) FetchListByLang(langCode string) ([]*baseInfo.BaseInfo, error) {
-	list := []*baseInfo.BaseInfo{}
-	err := b.baseInfoRepository.FetchListByLang(list, langCode)
-	return list, err
+	return b.baseInfoRepository.FetchListByLang(langCode)
 }
