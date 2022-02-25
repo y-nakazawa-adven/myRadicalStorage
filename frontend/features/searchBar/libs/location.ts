@@ -23,4 +23,10 @@ export class LocationValue {
     }
     return `${this.location} - ${this.address}`
   }
+  get Location(): string {
+    return this.location
+  }
+  get Address(): string {
+    return this.address
+  }
 }

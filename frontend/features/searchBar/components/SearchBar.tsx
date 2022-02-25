@@ -9,7 +9,7 @@ import { Luggage, Minus, Plus, Search, Today } from '@components/Icons'
 import { Button, Popover } from '@components/Elements'
 import { suggestClient, suggestIndexNameJA, suggestIndexNameEN } from '@libs/api/algolia'
 import { DATE_FORMAT, TIME_FORMAT } from '@libs/utils/const'
-import { queryToParam, SearchQuery } from '@features/searchBar'
+import { paramToQuery, queryToParam, SearchQuery } from '@features/searchBar'
 
 // private
 import { SuggestBox } from './SuggestBox'
@@ -18,7 +18,7 @@ import { LocationValue } from '../libs/location'
 import { toDateFormat } from '@libs/utils/day'
 
 export const SearchBar = () => {
-  const { locale, query } = useRouter()
+  const { locale, query, push } = useRouter()
   const [inputState, dispatch] = useSearchInput(queryToParam(query))
   const { t } = useTranslation('searchBar')
   const locationFormat = new LocationValue(inputState)
@@ -106,7 +106,18 @@ export const SearchBar = () => {
 
   // search button click!
   const clickSearchButton = () => {
-    console.log(inputState)
+    const [loc1] = locationInput.split(' - ')
+    const location = loc1 === locationFormat.Location ? locationFormat.Location : loc1
+    const address = loc1 === locationFormat.Location ? locationFormat.Address : ''
+
+    push({
+      pathname: '/',
+      query: paramToQuery({
+        ...inputState,
+        location,
+        address,
+      }),
+    })
   }
 
   return (
@@ -119,9 +130,7 @@ export const SearchBar = () => {
           placeholder={t('AREA_INPUT.PLACEHOLDER')}
           width="w-72"
           click={clickSuggest}
-          change={(e) => {
-            setLocationInput(e.target.value)
-          }}
+          change={(e) => setLocationInput(e.target.value)}
         />
       </InstantSearch>
       <div>
