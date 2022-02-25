@@ -2,7 +2,7 @@
 import { useState } from 'react'
 
 import { ArrowDropDown, ArrowDropUp } from '@components/Icons'
-import { isString } from '@lib/utils/common'
+import { isString } from '@libs/utils/common'
 
 export type option = {
   boldText?: string // テキスト前に表示されるboldの文字

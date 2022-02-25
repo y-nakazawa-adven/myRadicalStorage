@@ -4,7 +4,7 @@ import { SearchBoxProvided } from 'react-instantsearch-core'
 import cn from 'classnames'
 
 import { SuggestList } from './SuggestList'
-import useDebounce from '@lib/hooks/useDebounce'
+import useDebounce from '@libs/hooks/useDebounce'
 import { Search } from '@components/Icons'
 import { InputField } from '@components/Form'
 import { SearchQuery } from '@features/searchBar'

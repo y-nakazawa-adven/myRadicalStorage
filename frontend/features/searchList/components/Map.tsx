@@ -2,9 +2,9 @@
  * https://react-google-maps-api-docs.netlify.app/
  */
 
-import { MAP_API_KEY } from '@lib/utils/const'
+import { MAP_API_KEY } from '@libs/utils/const'
 import { GoogleMap, LoadScript, Marker } from '@react-google-maps/api'
-import { Geo } from '@lib/utils/types'
+import { Geo } from '@libs/utils/types'
 
 export const Map = () => {
   const center: Geo = {

@@ -1,4 +1,4 @@
-import { searchClient } from '@lib/api/algolia'
+import { searchClient } from '@libs/api/algolia'
 import { PropertyForSearch } from '@features/searchList'
 
 type Hits = {
