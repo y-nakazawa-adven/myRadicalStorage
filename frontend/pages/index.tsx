@@ -4,11 +4,10 @@ import { serverSideTranslations } from 'next-i18next/serverSideTranslations'
 import { Page } from '@components/Page'
 import { SearchContainer } from '@components/Layout'
 import { SearchList, Map } from '@features/searchList'
-import { axios } from '@lib/api/axios'
+import { axios } from '@libs/api/axios'
+import { baseInfoRequest } from '@features/searchBar'
 
 export const getStaticProps: GetStaticProps = async ({ locale }) => {
-  const baseInfoRequest = async (locale: string | undefined) =>
-    await axios.get(`/baseinfo?langCode=${locale}`)
   const translationRequest = async (locale: string | undefined) =>
     await serverSideTranslations(locale as string, [
       'common',

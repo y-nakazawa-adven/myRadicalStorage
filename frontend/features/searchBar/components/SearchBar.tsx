@@ -7,16 +7,19 @@ import { useRouter } from 'next/router'
 
 import { Luggage, Minus, Plus, Search, Today } from '@components/Icons'
 import { Button, Popover } from '@components/Elements'
-import { suggestClient, suggestIndexNameJA, suggestIndexNameEN } from '@lib/api/algolia'
+import { suggestClient, suggestIndexNameJA, suggestIndexNameEN } from '@libs/api/algolia'
+import { DATE_FORMAT, TIME_FORMAT } from '@libs/utils/const'
+import { queryToParam, SearchQuery } from '@features/searchBar'
+
+// private
 import { SuggestBox } from './SuggestBox'
-import { defaultSearchInput, SearchQuery } from '@features/searchBar'
 import { useSearchInput } from '../hooks/useSearchInput'
 import { LocationValue } from '../libs/location'
-import { DATE_FORMAT, TIME_FORMAT } from '@lib/utils/const'
+import { toDateFormat } from '@libs/utils/day'
 
 export const SearchBar = () => {
   const { locale, query } = useRouter()
-  const [inputState, dispatch] = useSearchInput(defaultSearchInput)
+  const [inputState, dispatch] = useSearchInput(queryToParam(query))
   const { t } = useTranslation('searchBar')
   const locationFormat = new LocationValue(inputState)
   const [locationInput, setLocationInput] = useState(locationFormat.Format)
@@ -42,10 +45,10 @@ export const SearchBar = () => {
   }
 
   const [checkinDate, setCheckinDate] = useState(
-    parse(`${inputState.checkinDay} ${inputState.checkinTime}`, DATE_FORMAT, new Date()),
+    toDateFormat(inputState.checkinDay, inputState.checkinTime),
   )
   const [checkoutDate, setCheckoutDate] = useState(
-    parse(`${inputState.checkoutDay} ${inputState.checkoutTime}`, DATE_FORMAT, new Date()),
+    toDateFormat(inputState.checkoutDay, inputState.checkoutTime),
   )
 
   const timeIntervals = 30 // 時間選択の間隔。30分単位

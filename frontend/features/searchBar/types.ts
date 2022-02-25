@@ -1,4 +1,4 @@
-import { Geo } from '@lib/utils/types'
+import { Geo } from '@libs/utils/types'
 
 export type SearchQuery = { objectID: string; location: string; address: string; _geoloc: Geo }
 
