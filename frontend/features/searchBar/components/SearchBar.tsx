@@ -1,7 +1,7 @@
 import DatePicker from 'react-datepicker'
 import { useState } from 'react'
 import { useTranslation } from 'next-i18next'
-import { addMinutes, addMonths, endOfDay, getDayOfYear, startOfDay } from 'date-fns'
+import { addMinutes, addMonths, endOfDay, format, getDayOfYear, parse, startOfDay } from 'date-fns'
 import { Configure, InstantSearch } from 'react-instantsearch-dom'
 import { useRouter } from 'next/router'
 
@@ -9,28 +9,46 @@ import { Luggage, Minus, Plus, Search, Today } from '@components/Icons'
 import { Button, Popover } from '@components/Elements'
 import { suggestClient, suggestIndexNameJA, suggestIndexNameEN } from '@lib/api/algolia'
 import { SuggestBox } from './SuggestBox'
-import { SearchQuery } from '@features/searchBar'
+import { defaultSearchInput, SearchQuery } from '@features/searchBar'
+import { useSearchInput } from '../hooks/useSearchInput'
+import { LocationValue } from '../libs/location'
+import { DATE_FORMAT, TIME_FORMAT } from '@lib/utils/const'
 
 export const SearchBar = () => {
-  const { locale } = useRouter()
+  const { locale, query } = useRouter()
+  const [inputState, dispatch] = useSearchInput(defaultSearchInput)
   const { t } = useTranslation('searchBar')
-  const [locationInput, setLocationInput] = useState('')
-  const [countSizeA, setCountSizeA] = useState(0)
-  const [countSizeB, setCountSizeB] = useState(0)
+  const locationFormat = new LocationValue(inputState)
+  const [locationInput, setLocationInput] = useState(locationFormat.Format)
+  const [countSizeA, setCountSizeA] = useState(inputState.countSizeA)
+  const [countSizeB, setCountSizeB] = useState(inputState.countSizeB)
   const clickSizeA = (num: number) => {
-    countSizeA + num >= 0 ? setCountSizeA((prevCountSizeA) => prevCountSizeA + num) : 0
+    if (countSizeA + num >= 0) {
+      dispatch({ type: 'updateCountSizeA', countSizeA: countSizeA + num })
+      setCountSizeA((prevCountSizeA) => prevCountSizeA + num)
+    } else {
+      dispatch({ type: 'updateCountSizeA', countSizeA: 0 })
+      setCountSizeA(0)
+    }
   }
-  const clickSizeB = (num: number) =>
-    countSizeB + num >= 0 ? setCountSizeB((prevCountSizeB) => prevCountSizeB + num) : 0
+  const clickSizeB = (num: number) => {
+    if (countSizeB + num >= 0) {
+      dispatch({ type: 'updateCountSizeB', countSizeB: countSizeB + num })
+      setCountSizeB((prevCountSizeB) => prevCountSizeB + num)
+    } else {
+      dispatch({ type: 'updateCountSizeB', countSizeB: 0 })
+      setCountSizeB(0)
+    }
+  }
 
-  const [checkinDate, setCheckinDate] = useState(new Date())
-  const [checkoutDate, setCheckoutDate] = useState(new Date())
+  const [checkinDate, setCheckinDate] = useState(
+    parse(`${inputState.checkinDay} ${inputState.checkinTime}`, DATE_FORMAT, new Date()),
+  )
+  const [checkoutDate, setCheckoutDate] = useState(
+    parse(`${inputState.checkoutDay} ${inputState.checkoutTime}`, DATE_FORMAT, new Date()),
+  )
 
   const timeIntervals = 30 // 時間選択の間隔。30分単位
-  const dateFormat = 'yyyy/MM/dd HH:mm' // 選択後にフォームに表示される日付のフォーマット。ex. 2022/01/01 00:00
-  const timeFormat = 'HH:mm' // datepicker内の時間のフォーマット ex. 11:00
-  // const aaa = new Date()
-  // console.log(aaa.getTimezoneOffset() / 60)
   // チェックインのdatePickerの設定諸々
   const checkinConfig = {
     minDate: new Date(),
@@ -40,7 +58,14 @@ export const SearchBar = () => {
       getDayOfYear(checkoutDate) === getDayOfYear(checkinDate)
         ? addMinutes(checkoutDate, -30)
         : endOfDay(new Date()),
-    onChange: (date: Date) => setCheckinDate(date),
+    onChange: (date: Date) => {
+      dispatch({
+        type: 'updateCheckin',
+        checkinDay: format(date, DATE_FORMAT),
+        checkinTime: format(date, TIME_FORMAT),
+      })
+      setCheckinDate(date)
+    },
   }
 
   // チェックアウトのdatePickerの設定諸々
@@ -52,7 +77,14 @@ export const SearchBar = () => {
         ? addMinutes(checkinDate, 30)
         : startOfDay(new Date()),
     maxTime: endOfDay(new Date()),
-    onChange: (date: Date) => setCheckoutDate(date),
+    onChange: (date: Date) => {
+      dispatch({
+        type: 'updateCheckout',
+        checkoutDay: format(date, DATE_FORMAT),
+        checkoutTime: format(date, TIME_FORMAT),
+      })
+      setCheckoutDate(date)
+    },
   }
 
   //  TODO: いったんここに！あとできれいに直します
@@ -64,12 +96,15 @@ export const SearchBar = () => {
   }
 
   const clickSuggest = (hit: SearchQuery) => {
-    console.log('click suggest item!')
-    setLocationInput(`${hit.location} - ${hit.address}`)
+    dispatch({ type: 'updateLocation', value: hit })
+    locationFormat.Value = hit
+    setLocationInput(locationFormat.Format)
   }
 
   // search button click!
-  const clickSearchButton = () => {}
+  const clickSearchButton = () => {
+    console.log(inputState)
+  }
 
   return (
     <div className="flex flex-wrap items-center gap-4 px-4 py-2.5">
@@ -97,8 +132,8 @@ export const SearchBar = () => {
             id="checkin"
             closeOnScroll
             selected={checkinDate}
-            dateFormat={dateFormat}
-            timeFormat={timeFormat}
+            dateFormat={DATE_FORMAT}
+            timeFormat={TIME_FORMAT}
             minDate={checkinConfig.minDate}
             maxDate={checkinConfig.maxDate}
             minTime={checkinConfig.minTime}
@@ -123,8 +158,8 @@ export const SearchBar = () => {
             id="checkout"
             closeOnScroll
             selected={checkoutDate}
-            dateFormat={dateFormat}
-            timeFormat={timeFormat}
+            dateFormat={DATE_FORMAT}
+            timeFormat={TIME_FORMAT}
             minDate={checkoutConfig.minDate}
             maxDate={checkoutConfig.maxDate}
             minTime={checkoutConfig.minTime}
