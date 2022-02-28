@@ -1,21 +1,31 @@
 import DatePicker from 'react-datepicker'
 import { useState } from 'react'
 import { useTranslation } from 'next-i18next'
-import { addMinutes, addMonths, endOfDay, format, getDayOfYear, parse, startOfDay } from 'date-fns'
+import {
+  addMinutes,
+  addMonths,
+  endOfDay,
+  format,
+  getDayOfYear,
+  isAfter,
+  isBefore,
+  startOfDay,
+} from 'date-fns'
 import { Configure, InstantSearch } from 'react-instantsearch-dom'
 import { useRouter } from 'next/router'
 
 import { Luggage, Minus, Plus, Search, Today } from '@components/Icons'
 import { Button, Popover } from '@components/Elements'
 import { suggestClient, suggestIndexNameJA, suggestIndexNameEN } from '@libs/api/algolia'
-import { DATE_FORMAT, TIME_FORMAT } from '@libs/utils/const'
-import { paramToQuery, queryToParam, SearchQuery } from '@features/searchBar'
+import { DATE_FORMAT, DAY_FORMAT, TIME_FORMAT } from '@libs/utils/const'
+import { paramToQuery, SearchQuery } from '@features/searchBar'
+import { toDateFormat } from '@libs/utils/day'
+import { queryToParam } from '@libs/utils/common'
 
 // private
 import { SuggestBox } from './SuggestBox'
 import { useSearchInput } from '../hooks/useSearchInput'
 import { LocationValue } from '../libs/location'
-import { toDateFormat } from '@libs/utils/day'
 
 export const SearchBar = () => {
   const { locale, query, push } = useRouter()
@@ -44,18 +54,22 @@ export const SearchBar = () => {
     }
   }
 
+  const initialCheckinDate = toDateFormat(inputState.checkinDay, inputState.checkinTime)
   const [checkinDate, setCheckinDate] = useState(
-    toDateFormat(inputState.checkinDay, inputState.checkinTime),
+    isAfter(initialCheckinDate, new Date()) ? initialCheckinDate : new Date(),
   )
+
+  const initialCheckoutDate = toDateFormat(inputState.checkoutDay, inputState.checkoutTime)
+  const afterThereeMonth = addMonths(new Date(), 3) // 最大3ヶ月
   const [checkoutDate, setCheckoutDate] = useState(
-    toDateFormat(inputState.checkoutDay, inputState.checkoutTime),
+    isBefore(initialCheckoutDate, afterThereeMonth) ? initialCheckoutDate : afterThereeMonth,
   )
 
   const timeIntervals = 30 // 時間選択の間隔。30分単位
   // チェックインのdatePickerの設定諸々
   const checkinConfig = {
     minDate: new Date(),
-    maxDate: checkoutDate || addMonths(new Date(), 3), // 最大3ヶ月
+    maxDate: checkoutDate || afterThereeMonth, // 最大3ヶ月
     minTime: startOfDay(new Date()),
     maxTime:
       getDayOfYear(checkoutDate) === getDayOfYear(checkinDate)
@@ -64,8 +78,8 @@ export const SearchBar = () => {
     onChange: (date: Date) => {
       dispatch({
         type: 'updateCheckin',
-        checkinDay: format(date, DATE_FORMAT),
-        checkinTime: format(date, TIME_FORMAT),
+        checkinDay: date ? format(date, DAY_FORMAT) : '',
+        checkinTime: date ? format(date, TIME_FORMAT) : '',
       })
       setCheckinDate(date)
     },
@@ -75,16 +89,13 @@ export const SearchBar = () => {
   const checkoutConfig = {
     minDate: checkinDate || new Date(),
     maxDate: addMonths(new Date(), 3), // 最大3ヶ月
-    minTime:
-      getDayOfYear(checkoutDate) === getDayOfYear(checkinDate) // 最大３ヶ月想定なので、重複がない点を考慮しgetDayOfYear使ってます
-        ? addMinutes(checkinDate, 30)
-        : startOfDay(new Date()),
+    minTime: checkinDate ? addMinutes(checkinDate, 30) : startOfDay(new Date()),
     maxTime: endOfDay(new Date()),
     onChange: (date: Date) => {
       dispatch({
         type: 'updateCheckout',
-        checkoutDay: format(date, DATE_FORMAT),
-        checkoutTime: format(date, TIME_FORMAT),
+        checkoutDay: date ? format(date, DAY_FORMAT) : '',
+        checkoutTime: date ? format(date, TIME_FORMAT) : '',
       })
       setCheckoutDate(date)
     },

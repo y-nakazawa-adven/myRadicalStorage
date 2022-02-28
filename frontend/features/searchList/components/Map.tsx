@@ -5,44 +5,58 @@
 import { MAP_API_KEY } from '@libs/utils/const'
 import { GoogleMap, LoadScript, Marker } from '@react-google-maps/api'
 import { Geo } from '@libs/utils/types'
+import { PropertyForSearch, SearchPropertiesAction } from '@features/searchList'
+import { Dispatch } from 'react'
+import { SearchInput } from '@features/searchBar'
 
-export const Map = () => {
-  const center: Geo = {
-    lat: 35.69575,
-    lng: 139.77521,
-  }
-  const positionAkiba: Geo = {
-    lat: 35.69731,
-    lng: 139.7747,
-  }
-
-  const positionIwamotocho: Geo = {
-    lat: 35.69397,
-    lng: 139.7762,
-  }
-  const markerLabelAkiba = {
-    color: 'white',
-    fontFamily: 'sans-serif',
-    fontSize: '15px',
-    fontWeight: '100',
-    text: '1',
-  }
-
-  const markerLabelIwamotocho = {
-    color: 'white',
-    fontFamily: 'sans-serif',
-    fontSize: '15px',
-    fontWeight: '100',
-    text: '2',
+type Props = {
+  query: SearchInput
+  properties: PropertyForSearch[]
+  dispatch: Dispatch<SearchPropertiesAction>
+}
+export const Map = ({ query, properties }: Props) => {
+  console.log(properties)
+  const getCenter = (): Geo => {
+    if (!!query._geoloc.lat && !!query._geoloc.lng) {
+      return {
+        lat: query._geoloc.lat,
+        lng: query._geoloc.lng,
+      }
+    }
+    if (properties.length > 0) {
+      return {
+        lat: properties[0]._geoloc.lat,
+        lng: properties[0]._geoloc.lng,
+      }
+    }
+    return {
+      lat: 35.69575,
+      lng: 139.77521,
+    }
   }
 
   return (
-    // <LoadScript googleMapsApiKey={MAP_API_KEY}>
-    //   <GoogleMap mapContainerClassName="w-full h-full" center={center} zoom={15}>
-    //     <Marker position={positionAkiba} label={markerLabelAkiba} />
-    //     <Marker position={positionIwamotocho} label={markerLabelIwamotocho} />
-    //   </GoogleMap>
-    // </LoadScript>
-    <div></div>
+    <>
+      {properties.length > 0 ? (
+        <LoadScript googleMapsApiKey={MAP_API_KEY}>
+          <GoogleMap mapContainerClassName="w-full h-full" center={getCenter()} zoom={15}>
+            {properties.map((property: PropertyForSearch, index: number) => (
+              <Marker
+                position={{ ...property._geoloc }}
+                label={{
+                  color: 'white',
+                  fontFamily: 'sans-serif',
+                  fontSize: '15px',
+                  fontWeight: '100',
+                  text: `${index + 1}`,
+                }}
+              />
+            ))}
+          </GoogleMap>
+        </LoadScript>
+      ) : (
+        <div>NG!!</div>
+      )}
+    </>
   )
 }
