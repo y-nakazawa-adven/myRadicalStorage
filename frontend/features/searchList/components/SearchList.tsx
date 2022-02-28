@@ -2,9 +2,39 @@ import { useTranslation } from 'next-i18next'
 import { SearchListItem } from './SearchListItem'
 import { Modal, ToggleButton } from '@components/Elements'
 import { Wifi } from '@components/Icons'
+import { PropertyForSearch, SearchPropertiesAction } from '@features/searchList'
+import { Dispatch, useEffect } from 'react'
 
-export const SearchList = () => {
+type Props = {
+  properties: PropertyForSearch[]
+  dispatch: Dispatch<SearchPropertiesAction>
+}
+
+export const SearchList = ({ properties, dispatch }: Props) => {
   const { t } = useTranslation(['searchList', 'searchFiltering'])
+
+  useEffect(() => {
+    dispatch({
+      type: 'updateProperties',
+      value: [
+        {
+          objectID: 'a',
+          name: '施設名A',
+          imageUrl: '/images/dummy_600_400.png',
+          reviewRate: 4.5,
+          category: 'CITY',
+          baseInfo: ['エレベータあり', '英語OK'],
+          nearest: '東京駅から徒歩100分',
+          _geoloc: {
+            lat: 35.681115698235644,
+            lng: 139.77376393957235,
+          },
+        },
+      ],
+    })
+  }, [])
+  console.log('list:', properties)
+
   return (
     <div className="h-full min-w-84 overflow-hidden py-4">
       <div className="mb-2 flex items-center justify-between pr-4">
@@ -37,23 +67,25 @@ export const SearchList = () => {
         </Modal>
       </div>
       <div className="h-full overflow-y-scroll pr-4 pb-12">
-        <ul className="mt-4 flex flex-col gap-4">
-          <li className="flex h-44 cursor-pointer overflow-hidden rounded-3xl border">
-            <SearchListItem />
-          </li>
-          <li className="flex h-44 cursor-pointer overflow-hidden rounded-3xl border">
-            <SearchListItem />
-          </li>
-          <li className="flex h-44 cursor-pointer overflow-hidden rounded-3xl border">
-            <SearchListItem />
-          </li>
-          <li className="flex h-44 cursor-pointer overflow-hidden rounded-3xl border">
-            <SearchListItem />
-          </li>
-          <li className="flex h-44 cursor-pointer overflow-hidden rounded-3xl border">
-            <SearchListItem />
-          </li>
-        </ul>
+        {properties.length > 0 && (
+          <ul className="mt-4 flex flex-col gap-4">
+            {properties.map((property, index) => (
+              <li
+                className="flex h-44 cursor-pointer overflow-hidden rounded-3xl border"
+                key={`SearchListItem-${index}`}
+              >
+                <SearchListItem
+                  imageUrl={property.imageUrl}
+                  name={property.name}
+                  reviewRate={property.reviewRate}
+                  category={property.category}
+                  baseInfo={property.baseInfo}
+                  nearest={property.nearest}
+                />
+              </li>
+            ))}
+          </ul>
+        )}
       </div>
     </div>
   )

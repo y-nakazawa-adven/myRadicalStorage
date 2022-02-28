@@ -1,11 +1,15 @@
 export type PropertyForSearch = {
+  objectID: string
   name: string
   reviewRate: number
-  category: PropertyCategory[]
-  tag: PropertyTag[]
-  nearbyBuildings: string
+  category: PropertyCategory
+  baseInfo: string[]
+  nearest: string
   imageUrl: string
+  _geoloc: {
+    lat: number
+    lng: number
+  }
 }
 
 export type PropertyCategory = 'CITY' | 'STATION'
-export type PropertyTag = '' | ''
