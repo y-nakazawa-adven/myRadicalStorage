@@ -3,10 +3,10 @@
  */
 
 import { MAP_API_KEY } from '@libs/utils/const'
-import { GoogleMap, LoadScript, Marker } from '@react-google-maps/api'
+import { GoogleMap, LoadScript, Marker, useLoadScript } from '@react-google-maps/api'
 import { Geo } from '@libs/utils/types'
 import { PropertyForSearch, SearchPropertiesAction } from '@features/searchList'
-import { Dispatch } from 'react'
+import { Dispatch, memo } from 'react'
 import { SearchInput } from '@features/searchBar'
 
 type Props = {
@@ -14,8 +14,14 @@ type Props = {
   properties: PropertyForSearch[]
   dispatch: Dispatch<SearchPropertiesAction>
 }
-export const Map = ({ query, properties }: Props) => {
-  console.log(properties)
+export const Map = memo(({ query, properties }: Props) => {
+  // 以下バグ対策
+  // You have included the Google Maps JavaScript API multiple times on this page. This may cause unexpected errors.
+  // @react-google-maps/apiのもとになったソースのPR。解決せずに終わってる感
+  // https://github.com/tomchentw/react-google-maps/issues/812
+  const { isLoaded } = useLoadScript({
+    googleMapsApiKey: MAP_API_KEY,
+  })
   const getCenter = (): Geo => {
     if (!!query._geoloc.lat && !!query._geoloc.lng) {
       return {
@@ -37,11 +43,12 @@ export const Map = ({ query, properties }: Props) => {
 
   return (
     <>
-      {properties.length > 0 ? (
-        <LoadScript googleMapsApiKey={MAP_API_KEY}>
-          <GoogleMap mapContainerClassName="w-full h-full" center={getCenter()} zoom={15}>
-            {properties.map((property: PropertyForSearch, index: number) => (
+      {isLoaded ? (
+        <GoogleMap mapContainerClassName="w-full h-full" center={getCenter()} zoom={15}>
+          {properties.length > 0 &&
+            properties.map((property: PropertyForSearch, index: number) => (
               <Marker
+                key={`marker-${index}`}
                 position={{ ...property._geoloc }}
                 label={{
                   color: 'white',
@@ -52,11 +59,10 @@ export const Map = ({ query, properties }: Props) => {
                 }}
               />
             ))}
-          </GoogleMap>
-        </LoadScript>
+        </GoogleMap>
       ) : (
-        <div>NG!!</div>
+        <div>ロード中</div>
       )}
     </>
   )
-}
+})

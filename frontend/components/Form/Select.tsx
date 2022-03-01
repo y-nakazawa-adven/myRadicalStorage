@@ -1,5 +1,5 @@
 /* いったん形だけ実装 */
-import { useState } from 'react'
+import { memo, useState } from 'react'
 
 import { ArrowDropDown, ArrowDropUp } from '@components/Icons'
 import { isString } from '@libs/utils/common'
@@ -20,7 +20,7 @@ export type Props = {
   click: (value: string) => void
 }
 
-export const Select = ({ selectedValue, title = '', options, columns, click }: Props) => {
+export const Select = memo(({ selectedValue, title = '', options, columns, click }: Props) => {
   const [isOpen, setIsOpen] = useState(false)
   const gridClass = `grid grid-cols-${columns} gap-1 text-sm`
   const selectedOption = options.find((option: option) => option.value === selectedValue) || {
@@ -71,4 +71,4 @@ export const Select = ({ selectedValue, title = '', options, columns, click }: P
       )}
     </div>
   )
-}
+})
