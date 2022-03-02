@@ -37,7 +37,7 @@ module.exports = {
           '32cccc': '#32cccc',
         },
         yellow: {
-          ff6600: '#ff6600',
+          ffbf00: '#ffbf00',
         },
       },
       height: {

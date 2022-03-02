@@ -1,5 +1,9 @@
 {
   "TITLE": "List of Luggage Storage",
   "FILTER_TEXT": "Filter",
-  "SUBMIT_BTN_TEXT": "APPLY"
+  "SUBMIT_BTN_TEXT": "APPLY",
+  "CATEGORY": {
+    "CITY": "City",
+    "STATION": "Station"
+  }
 }

@@ -1,5 +1,5 @@
 import cn from 'classnames'
-import React, { memo } from 'react'
+import { memo } from 'react'
 
 type Props = {
   className?: string
@@ -9,7 +9,7 @@ type Props = {
   click: () => void
 }
 
-export const Button = React.memo(({ className, icon, placeholder = '', value, click }: Props) => {
+export const Button = memo(({ className, icon, placeholder = '', value, click }: Props) => {
   return (
     <button className={cn({ 'relative pl-8': icon }, className)} onClick={click}>
       {icon && <div className="absolute inset-y-1.75 left-2">{icon}</div>}
