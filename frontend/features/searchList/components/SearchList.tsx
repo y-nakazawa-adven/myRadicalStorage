@@ -13,26 +13,6 @@ type Props = {
 export const SearchList = ({ properties, dispatch }: Props) => {
   const { t } = useTranslation(['searchList', 'searchFiltering'])
 
-  useEffect(() => {
-    dispatch({
-      type: 'updateProperties',
-      value: [
-        {
-          objectID: 'a',
-          name: '施設名A',
-          imageUrl: '/images/dummy_600_400.png',
-          reviewRate: 4.5,
-          category: 'CITY',
-          baseInfo: ['エレベータあり', '英語OK'],
-          nearest: '東京駅から徒歩100分',
-          _geoloc: {
-            lat: 35.681115698235644,
-            lng: 139.77376393957235,
-          },
-        },
-      ],
-    })
-  }, [])
   console.log('list:', properties)
 
   return (

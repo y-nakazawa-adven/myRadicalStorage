@@ -5,14 +5,14 @@
 */
 
 import { Switch } from '@headlessui/react'
-import { useState } from 'react'
+import { memo, useState } from 'react'
 import cn from 'classnames'
 
 type Props = {
   className?: string
 }
 
-export const ToggleButton = ({ className }: Props) => {
+export const ToggleButton = memo(({ className }: Props) => {
   const [enabled, setEnabled] = useState(false)
 
   return (
@@ -34,4 +34,4 @@ export const ToggleButton = ({ className }: Props) => {
       />
     </Switch>
   )
-}
+})

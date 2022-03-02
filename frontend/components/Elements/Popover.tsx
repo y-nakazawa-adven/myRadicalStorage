@@ -1,4 +1,4 @@
-import { useState } from 'react'
+import { memo, useState } from 'react'
 import cn from 'classnames'
 import { Button } from '@components/Elements'
 
@@ -10,7 +10,7 @@ type Props = {
   children: React.ReactNode
 }
 
-export const Popover = ({ className, icon, placeholder, value, children }: Props) => {
+export const Popover = memo(({ className, icon, placeholder, value, children }: Props) => {
   const [isOpen, setIsOpen] = useState(false)
   return (
     <div
@@ -39,4 +39,4 @@ export const Popover = ({ className, icon, placeholder, value, children }: Props
       )}
     </div>
   )
-}
+})
