@@ -17,10 +17,12 @@ export const queryToParam = (query: any): SearchInput => ({
     lat: !!query.lat && isNumber(query.lat) ? +query.lat : 0,
     lng: !!query.lng && isNumber(query.lng) ? +query.lng : 0,
   },
-  checkinDay: yyyyMMddToSlash(query.checkinDay),
-  checkinTime: HHmmToTimeFormat(query.checkinTime),
-  checkoutDay: yyyyMMddToSlash(query.checkoutDay),
-  checkoutTime: HHmmToTimeFormat(query.checkoutTime),
+  checkinDay: query.checkinDay ? yyyyMMddToSlash(query.checkinDay) : yyyyMMddToSlash(new Date()),
+  checkinTime: query.checkinTime ? HHmmToTimeFormat(query.checkinTime) : HHmmToTimeFormat('0000'),
+  checkoutDay: query.checkoutDay ? yyyyMMddToSlash(query.checkoutDay) : yyyyMMddToSlash(new Date()),
+  checkoutTime: query.checkoutTime
+    ? HHmmToTimeFormat(query.checkoutTime)
+    : HHmmToTimeFormat('2330'),
   countSizeA: !!query.countSizeA && isNumber(query.countSizeA) ? query.countSizeA : 0,
   countSizeB: !!query.countSizeB && isNumber(query.countSizeB) ? query.countSizeB : 0,
 })
