@@ -1,5 +1,9 @@
 {
   "TITLE": "荷物預かり場所一覧",
   "FILTER_TEXT": "絞り込み",
-  "SUBMIT_BTN_TEXT": "適用"
+  "SUBMIT_BTN_TEXT": "適用",
+  "CATEGORY": {
+    "CITY": "都市",
+    "STATION": "駅"
+  }
 }

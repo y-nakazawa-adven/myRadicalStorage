@@ -58,11 +58,10 @@ const Home: NextPage = ({ baseInfo }: any) => {
   const head = { title: 'testですー', description: 'テストですー' }
   return (
     <Page {...head}>
-      {properties.length > 0 &&
-        SearchContainer(
-          <SearchList properties={properties} dispatch={dispatch} />,
-          <Map query={queryToParam(query)} properties={properties} dispatch={dispatch} />,
-        )}
+      {SearchContainer(
+        <SearchList properties={properties} dispatch={dispatch} />,
+        <Map query={queryToParam(query)} properties={properties} dispatch={dispatch} />,
+      )}
     </Page>
   )
 }

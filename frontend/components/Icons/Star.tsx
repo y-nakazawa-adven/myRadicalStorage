@@ -1,14 +1,16 @@
 type Props = {
   width?: string | number
   height?: string | number
+  x?: number
+  y?: number
   className: string
 }
-export const Star = ({ className, height = 18, width = 18 }: Props) => (
+export const Star = ({ className, x = 0, y = 0, width = 24, height = 24 }: Props) => (
   <svg
     xmlns="http://www.w3.org/2000/svg"
     height={height}
-    viewBox="0 0 24 24"
     width={width}
+    viewBox={`${x} ${y} 24 24`}
     className={className}
   >
     <g>
