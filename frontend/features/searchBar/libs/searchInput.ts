@@ -14,6 +14,5 @@ export const paramToQuery = (param: SearchInput): { [key: string]: string } => {
   if (param.countSizeA > 0) query.countSizeA = param.countSizeA as unknown as string
   if (param.countSizeB > 0) query.countSizeB = param.countSizeB as unknown as string
 
-  console.log('query:', query)
   return query
 }

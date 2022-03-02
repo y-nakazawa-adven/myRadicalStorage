@@ -13,8 +13,6 @@ type Props = {
 export const SearchList = ({ properties, dispatch }: Props) => {
   const { t } = useTranslation(['searchList', 'searchFiltering'])
 
-  console.log('list:', properties)
-
   return (
     <div className="h-full min-w-84 overflow-hidden py-4">
       <div className="mb-2 flex items-center justify-between pr-4">
