@@ -1,9 +1,9 @@
-package usecases
+package applications
 
 import (
 	"cloud.google.com/go/firestore"
 	baseInfo "github.com/adShoheiTerashima/myRadicalStorage/baseInfo/domains"
-	"github.com/adShoheiTerashima/myRadicalStorage/baseInfo/infra"
+	"github.com/adShoheiTerashima/myRadicalStorage/baseInfo/infrastructures"
 	"github.com/labstack/echo/v4"
 )
 
@@ -13,7 +13,7 @@ type baseInfoUsecase struct {
 
 func NewBaseInfoUsecase(ctx echo.Context, firestoreDB *firestore.Client) baseInfo.IBaseInfoUsecase {
 	return &baseInfoUsecase{
-		baseInfoRepository: infra.NewBaseInfoRepository(ctx, firestoreDB),
+		baseInfoRepository: infrastructures.NewBaseInfoRepository(ctx, firestoreDB),
 	}
 }
 

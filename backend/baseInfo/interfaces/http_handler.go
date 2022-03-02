@@ -3,8 +3,8 @@ package handlers
 import (
 	"net/http"
 
+	"github.com/adShoheiTerashima/myRadicalStorage/baseInfo/applications"
 	"github.com/adShoheiTerashima/myRadicalStorage/baseInfo/domains"
-	"github.com/adShoheiTerashima/myRadicalStorage/baseInfo/usecases"
 	"github.com/adShoheiTerashima/myRadicalStorage/common/infra"
 	langDomain "github.com/adShoheiTerashima/myRadicalStorage/languages/domains"
 
@@ -30,7 +30,7 @@ func (b *BaseInfoHandler) FetchListByLang(c echo.Context) error {
 
 	client := infra.OpenFirestore(c)
 	defer infra.CloseFirestore(client)
-	b.baseInfoUsecases = usecases.NewBaseInfoUsecase(c, client)
+	b.baseInfoUsecases = applications.NewBaseInfoUsecase(c, client)
 
 	list, err := b.baseInfoUsecases.FetchListByLang(langCode)
 	if err != nil {
