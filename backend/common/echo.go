@@ -3,7 +3,7 @@ package common
 import (
 	"net/http"
 
-	baseInfo "github.com/adShoheiTerashima/myRadicalStorage/baseInfo/handlers"
+	baseInfo "github.com/adShoheiTerashima/myRadicalStorage/baseInfo/interfaceAdapters"
 	"github.com/go-playground/validator/v10"
 	"github.com/labstack/echo/v4"
 	"github.com/labstack/echo/v4/middleware"
