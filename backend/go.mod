@@ -6,6 +6,7 @@ require (
 	cloud.google.com/go/firestore v1.6.1 // indirect
 	cloud.google.com/go/storage v1.21.0 // indirect
 	firebase.google.com/go v3.13.0+incompatible // indirect
+	github.com/algolia/algoliasearch-client-go/v3 v3.4.0 // indirect
 	github.com/go-playground/validator/v10 v10.10.0 // indirect
 	github.com/joho/godotenv v1.4.0 // indirect
 	github.com/labstack/echo/v4 v4.6.3
