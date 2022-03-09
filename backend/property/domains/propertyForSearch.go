@@ -2,7 +2,18 @@ package domains
 
 import "github.com/adShoheiTerashima/myRadicalStorage/baseInfo/domains"
 
-type SearchRequest struct{}
+type SearchRequest struct {
+	Location     string
+	Address      string
+	Lat          string
+	Lng          string
+	checkinDay   string
+	checkinTime  string
+	checkoutDay  string
+	checkoutTime string
+	countSizeA   int
+	countSizeB   int
+}
 
 type PropertyForSearch struct {
 	ID         string
