@@ -22,13 +22,14 @@ func NewStorageInfoRepository(ctx echo.Context, firestoreDB *firestore.Client) s
 	}
 }
 
-func (s *storageInfoRepository) FetchStockRemainingsPerProperties(propertyIDs []string, yyyymmdd string, hhmm string, sizeId int) ([]*storageInfo.StorageInfo, error) {
+func (s *storageInfoRepository) FetchStockRemainingsPerProperties(propertyIDs []string, checkinDate string, checkoutDate string, sizeId int) ([]*storageInfo.StorageInfo, error) {
 	result := []*storageInfo.StorageInfo{}
 	domain := storageInfo.New()
 	var docs []*firestore.DocumentRef
 
 	for _, propertyID := range propertyIDs {
-		formattedID := domain.FormatID(propertyID, yyyymmdd, hhmm, sizeId)
+		// checkinの日が営業しているかどうか
+		formattedID := domain.FormatID(propertyID, checkinDate, sizeId)
 		docs = append(docs, s.collection.Doc(formattedID))
 	}
 	dss, err := s.client.GetAll(s.ctx, docs)

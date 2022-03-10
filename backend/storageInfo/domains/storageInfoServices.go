@@ -1,6 +1,8 @@
 package domains
 
-import "strconv"
+import (
+	"time"
+)
 
 type StorageInfoServices struct {
 	checkinDay   string
@@ -8,8 +10,6 @@ type StorageInfoServices struct {
 	checkoutDay  string
 	checkoutTime string
 }
-
-var differenceInCheckinAndCheckout int = -1
 
 func SetviceNew(checkinDay string, checkinTime string, checkoutDay string, checkoutTime string) *StorageInfoServices {
 	return &StorageInfoServices{
@@ -21,15 +21,15 @@ func SetviceNew(checkinDay string, checkinTime string, checkoutDay string, check
 }
 
 func (s *StorageInfoServices) ValidMaxStorageDays(storageInfo *StorageInfo) bool {
-	if differenceInCheckinAndCheckout == -1 {
-		checkinDay, err := strconv.Atoi(s.checkinDay)
-		checkoutDay, err2 := strconv.Atoi(s.checkoutDay)
-		if err != nil || err2 != nil {
-			return false
-		}
-		differenceInCheckinAndCheckout = checkoutDay - checkinDay
+	checkoutDate, _ := time.Parse("20060102", s.checkoutDay+s.checkoutTime)
+	if !checkoutDate.IsZero() {
+		return false
 	}
-	return differenceInCheckinAndCheckout >= storageInfo.maxStorageDays
+	maxCheckoutDate, _ := time.Parse("20060102", storageInfo.checkoutDate)
+	if !maxCheckoutDate.IsZero() {
+		return false
+	}
+	return checkoutDate.Before(maxCheckoutDate) || checkoutDate.Equal(maxCheckoutDate)
 }
 
 func (s *StorageInfoServices) ValidStockRemaining(storageInfo *StorageInfo) bool {

@@ -22,7 +22,7 @@ type PropertyForSearch struct {
 	category   string
 	baseInfo   []domains.BaseInfo
 	nearest    string
-	imageUrl   string
+	imageUrl   []string
 	geoloc     geo
 }
 
