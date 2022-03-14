@@ -3,7 +3,7 @@ import { serverSideTranslations } from 'next-i18next/serverSideTranslations'
 
 import { Page } from '@components/Page'
 import { SearchContainer } from '@components/Layout'
-import { SearchList, Map, useSearchProperties } from '@features/searchList'
+import { SearchList, Map, useSearchProperties, fetchProperties } from '@features/searchList'
 import { baseInfoRequest } from '@features/searchBar'
 import { useRouter } from 'next/router'
 import { queryToParam } from '@libs/utils/common'
@@ -48,27 +48,27 @@ const Home: NextPage = ({ baseInfo }: any) => {
   }
 
   useEffect(() => {
-    // fetchProperties(queryParam, indexName(locale)).then((res) => {
-    //   console.log('res*', res)
-    //   dispatch({
-    //     type: 'updateProperties',
-    //     value: [
-    //       {
-    //         objectID: 'a',
-    //         name: '施設名A',
-    //         imageUrl: '/images/dummy_600_400.png',
-    //         reviewRate: 4.5,
-    //         category: 'CITY',
-    //         baseInfo: ['エレベータあり', '英語OK'],
-    //         nearest: '東京駅から徒歩100分',
-    //         _geoloc: {
-    //           lat: 35.681115698235644,
-    //           lng: 139.77376393957235,
-    //         },
-    //       },
-    //     ],
-    //   })
-    // })
+    fetchProperties(queryParam, indexName(locale)).then((res) => {
+      console.log('res*', res)
+      dispatch({
+        type: 'updateProperties',
+        value: [
+          {
+            objectID: 'a',
+            name: '施設名A',
+            imageUrl: '/images/dummy_600_400.png',
+            reviewRate: 4.5,
+            category: 'CITY',
+            baseInfo: ['エレベータあり', '英語OK'],
+            nearest: '東京駅から徒歩100分',
+            _geoloc: {
+              lat: 35.681115698235644,
+              lng: 139.77376393957235,
+            },
+          },
+        ],
+      })
+    })
   }, [query])
 
   return (
